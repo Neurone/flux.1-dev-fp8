@@ -2,18 +2,36 @@ import gradio as gr
 import numpy as np
 import random
 import spaces
-from diffusers import AuraFlowPipeline
 import torch
+from diffusers import  FluxPipeline, FluxTransformer2DModel,FlowMatchEulerDiscreteScheduler, AutoencoderKL
+from transformers import CLIPTextModel, CLIPTokenizer,T5EncoderModel, T5TokenizerFast
+
+dtype = torch.bfloat16
+device = "cuda"
+
+sd3_repo = "stabilityai/stable-diffusion-3-medium-diffusers"
+scheduler = FlowMatchEulerDiscreteScheduler.from_pretrained (sd3_repo, subfolder="scheduler")
+text_encoder = CLIPTextModel.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=dtype)
+tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=dtype)
+text_encoder_2 = T5EncoderModel.from_pretrained(sd3_repo, subfolder="text_encoder_3", torch_dtype=dtype)
+tokenizer_2 = T5TokenizerFast.from_pretrained(sd3_repo, subfolder="tokenizer_3", torch_dtype=dtype)
+vae = AutoencoderKL.from_pretrained("diffusers-internal-dev/FLUX.1-schnell", subfolder="vae", torch_dtype=dtype)
+transformer = FluxTransformer2DModel.from_pretrained("diffusers-internal-dev/FLUX.1-schnell", subfolder="transformer", torch_dtype=dtype)
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-pipe = AuraFlowPipeline.from_pretrained(
-	"fal/AuraFlow-v0.2",
-    torch_dtype=torch.float16
+pipe = FluxPipeline(
+    scheduler=scheduler,
+    text_encoder=text_encoder,
+    tokenizer=tokenizer,
+    text_encoder_2=text_encoder_2,
+    tokenizer_2=tokenizer_2,
+    vae=vae,
+    transformer=transformer,
 ).to("cuda")
 
 MAX_SEED = np.iinfo(np.int32).max
-MAX_IMAGE_SIZE = 1024
+MAX_IMAGE_SIZE = 2048
 
 @spaces.GPU()
 def infer(prompt, seed=42, randomize_seed=False, width=1024, height=1024, num_inference_steps=4, progress=gr.Progress(track_tqdm=True)):
@@ -23,15 +41,15 @@ def infer(prompt, seed=42, randomize_seed=False, width=1024, height=1024, num_in
             width = width,
             height = height,
             num_inference_steps = num_inference_steps, 
-            generator = generator
+            generator = generator,
+            guidance_scale=0.0
     ).images[0] 
     return image, seed
  
 examples = [
-    "A photo of a lavender cat",
-    "Astronaut in a jungle, cold color palette, muted colors, detailed, 8k",
-    "An astronaut riding a green horse",
-    "A delicious ceviche cheesecake slice",
+    "a tiny astronaut hatching from an egg on the moon",
+    "a cat holding a sign that says hello world",
+    "an anime illustration of a wiener schnitzel",
 ]
 
 css="""
@@ -46,7 +64,7 @@ with gr.Blocks(css=css) as demo:
     with gr.Column(elem_id="col-container"):
         gr.Markdown(f"""
         # FLUX.1 Schnell
-        Demo of the [FLUX.1 Schnell](https://huggingface.co/fal/AuraFlow) 12B parameters rectified flow transformer distilled from [FLUX.1 Pro](https://blackforestlabs.ai/) for fast generation in 4 steps
+        [FLUX.1 Schnell](https://huggingface.co/black-forest-labs/FLUX.1-schnell) demo 12B parameters rectified flow transformer distilled from [FLUX.1 Pro](https://blackforestlabs.ai/) for fast generation in 4 steps
         [[blog](https://blackforestlabs.ai/2024/07/31/announcing-black-forest-labs/)] [[model](https://black-forest-labs/FLUX.1-schnell)]]
         """)
         
