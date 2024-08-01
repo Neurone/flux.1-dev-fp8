@@ -1,5 +1,5 @@
 accelerate
-https://huggingface.co/datasets/multimodalart/steamboat-willy-frames/resolve/main/diffusers-0.30.0.dev0-py3-none-any.whl
+git+https://github.com/huggingface/diffusers.git@flux-pipeline
 invisible_watermark
 torch
 transformers==4.42.4
