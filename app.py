@@ -64,9 +64,9 @@ css="""
 with gr.Blocks(css=css) as demo:
     
     with gr.Column(elem_id="col-container"):
-        gr.Markdown(f"""# FLUX.1 [schnell]
-12B param rectified flow transformer distilled from [FLUX.1 [pro]](https://blackforestlabs.ai/) for 4 step generation
-[[blog](https://blackforestlabs.ai/2024/07/31/announcing-black-forest-labs/)] [[model](https://huggingface.co/black-forest-labs/FLUX.1-schnell)]
+        gr.Markdown(f"""# FLUX.1 [dev]
+12B param rectified flow transformer guidance-distilled from [FLUX.1 [pro]](https://blackforestlabs.ai/)
+[[blog](https://blackforestlabs.ai/2024/07/31/announcing-black-forest-labs/)] [[model](https://huggingface.co/black-forest-labs/FLUX.1-dev)]
         """)
         
         with gr.Row():
