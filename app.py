@@ -114,7 +114,7 @@ with gr.Blocks(css=css) as demo:
         )
 
     gr.on(
-        triggers=[run_button.click, prompt.submit, negative_prompt.submit],
+        triggers=[run_button.click, prompt.submit],
         fn = infer,
         inputs = [prompt, seed, randomize_seed, width, height, num_inference_steps],
         outputs = [result, seed]
