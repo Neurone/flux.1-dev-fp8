@@ -64,7 +64,8 @@ with gr.Blocks(css=css) as demo:
     with gr.Column(elem_id="col-container"):
         gr.Markdown(f"""
         # FLUX.1 Schnell
-        [FLUX.1 Schnell](https://huggingface.co/black-forest-labs/FLUX.1-schnell) demo 12B parameters rectified flow transformer distilled from [FLUX.1 Pro](https://blackforestlabs.ai/) for fast generation in 4 steps
+        12B parameters rectified flow transformer distilled from [FLUX.1 Pro](https://blackforestlabs.ai/) for fast 4 step image generation
+        
         [[blog](https://blackforestlabs.ai/2024/07/31/announcing-black-forest-labs/)] [[model](https://black-forest-labs/FLUX.1-schnell)]]
         """)
         
