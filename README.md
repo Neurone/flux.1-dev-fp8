@@ -1,6 +1,6 @@
 ---
 title: FLUX.1 Schnell
-emoji: 💻
+emoji: 🏎️💨
 colorFrom: yellow
 colorTo: pink
 sdk: gradio
