@@ -16,7 +16,7 @@ tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", torch
 text_encoder_2 = T5EncoderModel.from_pretrained(bfl_repo, subfolder="text_encoder_2", torch_dtype=dtype, revision="refs/pr/3")
 tokenizer_2 = T5TokenizerFast.from_pretrained(bfl_repo, subfolder="tokenizer_2", torch_dtype=dtype, revision="refs/pr/3")
 vae = AutoencoderKL.from_pretrained(bfl_repo, subfolder="vae", torch_dtype=dtype, revision="refs/pr/3")
-transformer = FluxTransformer2DModel.from_pretrained(bfl_repo, torch_dtype=dtype, revision="refs/pr/3")
+transformer = FluxTransformer2DModel.from_pretrained(bfl_repo, subfolder="transformer", torch_dtype=dtype, revision="refs/pr/3")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
