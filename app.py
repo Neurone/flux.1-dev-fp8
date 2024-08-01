@@ -57,17 +57,16 @@ examples = [
 css="""
 #col-container {
     margin: 0 auto;
-    max-width: 550px;
+    max-width: 520px;
 }
 """
 
 with gr.Blocks(css=css) as demo:
     
     with gr.Column(elem_id="col-container"):
-        gr.Markdown(f"""
-        # FLUX.1 Schnell
-        12B param rectified flow transformer distilled from [FLUX.1 Pro](https://blackforestlabs.ai/) for 4 step generation
-        [[blog](https://blackforestlabs.ai/2024/07/31/announcing-black-forest-labs/) [model](https://black-forest-labs/FLUX.1-schnell)]
+        gr.Markdown(f"""# FLUX.1 Schnell
+12B param rectified flow transformer distilled from [FLUX.1 Pro](https://blackforestlabs.ai/) for 4 step generation
+[[[blog](https://blackforestlabs.ai/2024/07/31/announcing-black-forest-labs/)] [[model](https://black-forest-labs/FLUX.1-schnell)]]
         """)
         
         with gr.Row():
