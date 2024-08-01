@@ -3,13 +3,14 @@ import numpy as np
 import random
 import spaces
 import torch
-from diffusers import  DiffusionPipeline
+from diffusers import  DiffusionPipeline, FlowMatchEulerDiscreteScheduler
 from transformers import CLIPTextModel, CLIPTokenizer,T5EncoderModel, T5TokenizerFast
 
 dtype = torch.bfloat16
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 pipe = DiffusionPipeline.from_pretrained("black-forest-labs/FLUX.1-dev", torch_dtype=torch.bfloat16, revision="refs/pr/3").to(device)
+pipe.scheduler = FlowMatchEulerDiscreteScheduler.from_pretrained ("black-forest-labs/FLUX.1-dev", subfolder="scheduler", use_dynamic_shifting=True)
 
 MAX_SEED = np.iinfo(np.int32).max
 MAX_IMAGE_SIZE = 2048
