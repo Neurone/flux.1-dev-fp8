@@ -107,7 +107,7 @@ with gr.Blocks(css=css) as demo:
         
         gr.Examples(
             examples = examples,
-            fn = infer_example,
+            fn = infer,
             inputs = [prompt],
             outputs = [result, seed],
             cache_examples="lazy"
