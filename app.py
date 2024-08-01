@@ -35,6 +35,7 @@ MAX_IMAGE_SIZE = 2048
 
 @spaces.GPU()
 def infer(prompt, seed=42, randomize_seed=False, width=1024, height=1024, guidance_scale=5.0, num_inference_steps=28, progress=gr.Progress(track_tqdm=True)):
+    pipe.to("cuda")
     if randomize_seed:
         seed = random.randint(0, MAX_SEED)
     generator = torch.Generator().manual_seed(seed)
