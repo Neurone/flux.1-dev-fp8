@@ -7,28 +7,9 @@ from diffusers import  FluxPipeline, FluxTransformer2DModel,FlowMatchEulerDiscre
 from transformers import CLIPTextModel, CLIPTokenizer,T5EncoderModel, T5TokenizerFast
 
 dtype = torch.bfloat16
-device = "cuda"
-
-bfl_repo = "black-forest-labs/FLUX.1-dev"
-scheduler = FlowMatchEulerDiscreteScheduler.from_pretrained(bfl_repo, subfolder="scheduler", revision="refs/pr/3")
-text_encoder = CLIPTextModel.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=dtype)
-tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=dtype)
-text_encoder_2 = T5EncoderModel.from_pretrained(bfl_repo, subfolder="text_encoder_2", torch_dtype=dtype, revision="refs/pr/3")
-tokenizer_2 = T5TokenizerFast.from_pretrained(bfl_repo, subfolder="tokenizer_2", torch_dtype=dtype, revision="refs/pr/3")
-vae = AutoencoderKL.from_pretrained(bfl_repo, subfolder="vae", torch_dtype=dtype, revision="refs/pr/3")
-transformer = FluxTransformer2DModel.from_pretrained(bfl_repo, subfolder="transformer", torch_dtype=dtype, revision="refs/pr/3")
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-pipe = FluxPipeline(
-    scheduler=scheduler,
-    text_encoder=text_encoder,
-    tokenizer=tokenizer,
-    text_encoder_2=text_encoder_2,
-    tokenizer_2=tokenizer_2,
-    vae=vae,
-    transformer=transformer,
-).to("cuda")
+pipe = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-dev", torch_dtype=torch.bfloat16).to(device)
 
 MAX_SEED = np.iinfo(np.int32).max
 MAX_IMAGE_SIZE = 2048
@@ -40,12 +21,12 @@ def infer(prompt, seed=42, randomize_seed=False, width=1024, height=1024, guidan
         seed = random.randint(0, MAX_SEED)
     generator = torch.Generator().manual_seed(seed)
     image = pipe(
-            prompt = prompt, 
-            width = width,
-            height = height,
-            num_inference_steps = num_inference_steps, 
-            generator = generator,
-            guidance_scale=guidance_scale
+        prompt = prompt, 
+        width = width,
+        height = height,
+        num_inference_steps = num_inference_steps, 
+        generator = generator,
+        guidance_scale=guidance_scale
     ).images[0] 
     return image, seed
  
