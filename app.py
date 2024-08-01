@@ -9,14 +9,14 @@ from transformers import CLIPTextModel, CLIPTokenizer,T5EncoderModel, T5Tokenize
 dtype = torch.bfloat16
 device = "cuda"
 
-bfl_repo = "black-forest-labs/FLUX.1-schnell"
+bfl_repo = "black-forest-labs/FLUX.1-dev"
 scheduler = FlowMatchEulerDiscreteScheduler.from_pretrained(bfl_repo, subfolder="scheduler", revision="refs/pr/1")
 text_encoder = CLIPTextModel.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=dtype)
 tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=dtype)
 text_encoder_2 = T5EncoderModel.from_pretrained(bfl_repo, subfolder="text_encoder_2", torch_dtype=dtype, revision="refs/pr/1")
 tokenizer_2 = T5TokenizerFast.from_pretrained(bfl_repo, subfolder="tokenizer_2", torch_dtype=dtype, revision="refs/pr/1")
 vae = AutoencoderKL.from_pretrained(bfl_repo, subfolder="vae", torch_dtype=dtype, revision="refs/pr/1")
-transformer = FluxTransformer2DModel.from_pretrained("diffusers-internal-dev/FLUX.1-dev", torch_dtype=dtype)
+transformer = FluxTransformer2DModel.from_pretrained(bfl_repo, torch_dtype=dtype, revision="refs/pr/1")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
