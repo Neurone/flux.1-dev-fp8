@@ -1,6 +1,5 @@
 accelerate
 git+https://github.com/huggingface/diffusers.git@flux-pipeline
-invisible_watermark
 torch
 transformers==4.42.4
 xformers
