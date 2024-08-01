@@ -139,4 +139,4 @@ with gr.Blocks(css=css) as demo:
         outputs = [result, seed]
     )
 
-demo.queue().launch()
+demo.launch()
