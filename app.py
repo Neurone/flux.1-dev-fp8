@@ -100,8 +100,8 @@ with gr.Blocks(css=css) as demo:
                     label="Guidance Scale",
                     minimum=1,
                     maximum=15,
-                    step=1,
-                    value=5.0,
+                    step=0.1,
+                    value=3.5,
                 )
   
                 num_inference_steps = gr.Slider(
