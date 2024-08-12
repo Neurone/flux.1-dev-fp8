@@ -4,3 +4,12 @@ torch
 transformers==4.42.4
 xformers
 sentencepiece
+gradio
+torchvision
+transformers
+sentencepiece
+protobuf
+optimum-quanto
+multiformats
+datetime
+exiv2
