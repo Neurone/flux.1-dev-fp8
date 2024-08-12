@@ -40,8 +40,15 @@ pip install -r requirements.txt
 cd flux.1-dev-fp8
 source .venv/bin/activate
 python app.py
+```
 
-# If you still have memory problems from time to time, start with this:
+## Alternative Run
+
+If you experience memory problems from time to time, especially when you try 2048x2048 images, try starting the app with this:
+
+```bash
+cd flux.1-dev-fp8
+source .venv/bin/activate
 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True python app.py
 ```
 
@@ -61,7 +68,7 @@ This is an example of the inference metadata saved into the PNG images.
   },
   "input": {
     "prompt": "A majestic angel with large, dark wings, adorned in flowing blue robes, carrying a sleeping baby and surrounded by cherubs in a moonlit sky.  Whimsical, ethereal, celestial, fantasy art",
-    "seed": 488802064,
+    "seed": 1262301990,
     "cfg_scale": 3.5,
     "steps": 28,
     "width": 1024,
@@ -69,10 +76,10 @@ This is an example of the inference metadata saved into the PNG images.
     "type": "txt2img"
   },
   "output": {
-    "filename": "1723501770.846882.png",
+    "filename": "1723504398.6657534.png",
     "format": "image/png",
-    "image_multihash": "122040b6092895e14c761b1dd6e4bef298b84c294450ef573905bf49df2e0488a7ac",
-    "creation_date_time": "2024-08-12 22:29:31.190793+00:00"
+    "image_multihash": "1220314871dc0bba139548c91895604e16f4183cd2911e825e924244ebee5e0b5916",
+    "creation_date_time": "2024-08-12 23:13:18.977696+00:00"
   }
 }
 ```
@@ -92,6 +99,7 @@ This is my configuration:
 Excluding the real first time when you need to download all the resources, these are some examples of the performance I get.
 
 Prompt: *A majestic angel with large, dark wings, adorned in flowing blue robes, carrying a sleeping baby and surrounded by cherubs in a moonlit sky.  Whimsical, ethereal, celestial, fantasy art*
+
 CFG: 3.5
 
 | operation | time spent |
@@ -99,13 +107,37 @@ CFG: 3.5
 | Startup time | ~4-5 minutes (the first startup after reboot takes ~13 mins.)|
 | Inference; 512x512; 28 steps | 19 seconds |
 | Inference; 1024x1024; 28 steps | 45 seconds |
+| Inference; 1024x1024; 50 steps | 1 minute and 6 seconds |
 | Inference; 1024x2024; 28 steps | 1 minute and 15 seconds |
 | Inference; 1024x2048; 40 steps | 1 minute and 44 seconds |
+| Inference; 2048x2048; 28 steps | 2 minutes and 39 seconds|
 | Inference; 2048x2048; 50 steps | 4 minutes and 46 seconds|
 
 After a couple of runs, most of the startup time is spent in the part **before** the quantization of the model.
 
 Quantization adds ~90 sec at the startup time.
+
+## Samples
+
+### 512x512; 28 steps
+
+![512x512; 28 steps](./samples/1723504145.2547626.webp "512x512; 28 steps")
+
+### 1024x1024; 28 steps
+
+![1024x1024; 28 steps](./samples/1723504398.6657534.webp "1024x1024; 28 steps")
+
+### 1024x2024; 28 steps
+
+![1024x2024; 28 steps](./samples/1723501887.0529025.webp "1024x2024; 28 steps")
+
+### 1024x2048; 40 steps
+
+![1024x2048; 40 steps](./samples/1723504062.1747687.webp "1024x2048; 40 steps")
+
+### 2048x2048; 50 steps
+
+![2048x2048; 50 steps](./samples/1723503836.2297032.webp "2048x2048; 50 steps")
 
 ## Example Of Consecutive Startups
 

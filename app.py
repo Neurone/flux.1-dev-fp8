@@ -70,7 +70,7 @@ def infer(prompt, seed=42, randomize_seed=False, width=1024, height=1024, guidan
     if randomize_seed:
         seed = random.randint(0, MAX_SEED)
     generator = torch.Generator().manual_seed(seed)
-    print(datetime.datetime.now(), f"Image generation started. Prompt: {prompt[:30]} | Seed: {seed} | Res: {width}x{height} | CFG: {guidance_scale} |  Steps: {num_inference_steps}") 
+    print(datetime.datetime.now(), f"Image generation started | Prompt: {prompt[:30]} | Seed: {seed} | Res: {width}x{height} | CFG: {guidance_scale} |  Steps: {num_inference_steps}") 
     image = pipe(
         prompt = prompt, 
         width = width,
