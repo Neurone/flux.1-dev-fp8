@@ -52,15 +52,15 @@ source .venv/bin/activate
 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True python app.py
 ```
 
-### Example Comparison
+### Model Comparison
 
-| FLUX.1-DEV FULL MODEL | FLUX.1-DEV-FP8 QUANTIZED MODEL |
+| FLUX.1-DEV | FLUX.1-DEV-FP8 |
 | - | - |
 | ![1024x2048; 40 steps; FLUX.1-DEV FULL MODEL](./samples/1723504062.1747687-dev.webp "1024x2048; 40 steps; FLUX.1-DEV FULL MODEL") | ![1024x2048; 40 steps; FLUX.1-DEV-FP8 QUANTIZED MODEL](./samples/1723504062.1747687.webp "1024x2048; 40 steps; FLUX.1-DEV-FP8 QUANTIZED MODEL") |
 
 ## Inference Metadata
 
-This is an example of the inference metadata saved into the PNG images.
+This is an example of the inference metadata saved into the PNG files.
 
 ```json
 {
@@ -74,20 +74,58 @@ This is an example of the inference metadata saved into the PNG images.
   },
   "input": {
     "prompt": "A majestic angel with large, dark wings, adorned in flowing blue robes, carrying a sleeping baby and surrounded by cherubs in a moonlit sky.  Whimsical, ethereal, celestial, fantasy art",
-    "seed": 1262301990,
+    "seed": 1914590619,
     "cfg_scale": 3.5,
-    "steps": 28,
+    "steps": 40,
     "width": 1024,
-    "height": 1024,
+    "height": 2048,
     "type": "txt2img"
   },
   "output": {
-    "filename": "1723504398.6657534.png",
+    "filename": "1723504062.1747687.png",
     "format": "image/png",
-    "image_multihash": "1220314871dc0bba139548c91895604e16f4183cd2911e825e924244ebee5e0b5916",
-    "creation_date_time": "2024-08-12 23:13:18.977696+00:00"
+    "image_multihash": "1220456650f0ccf07be30cc60e8c01b446039ac6606a7154bc59c30b5eb89e537258",
+    "creation_date_time": "2024-08-12 23:07:42.833579+00:00"
   }
 }
+```
+
+## File Metadata
+
+This is an example of all the metadata saved into the PNG files.
+
+```bash
+❯ exiftool 1723504062.1747687.png
+ExifTool Version Number         : 12.92
+File Name                       : 1723504062.1747687.png
+Directory                       : .
+File Size                       : 2.8 MB
+File Modification Date/Time     : 2024:08:13 01:07:42+02:00
+File Access Date/Time           : 2024:08:13 01:11:32+02:00
+File Inode Change Date/Time     : 2024:08:13 01:11:02+02:00
+File Permissions                : -rw-rw-r--
+File Type                       : PNG
+File Type Extension             : png
+MIME Type                       : image/png
+Image Width                     : 1024
+Image Height                    : 2048
+Bit Depth                       : 8
+Color Type                      : RGB
+Compression                     : Deflate/Inflate
+Filter                          : Adaptive
+Interlace                       : Noninterlaced
+Exif Byte Order                 : Little-endian (Intel, II)
+Image Description               : A majestic angel with large, dark wings, adorned in flowing blue robes, carrying a sleeping baby and surrounded by cherubs in a moonlit sky.  Whimsical, ethereal, celestial, fantasy art
+Make                            : Black Forest Labs
+Camera Model Name               : flux1-dev-fp8
+Modify Date                     : 2024-08-12 23:07:42.833579+00:00
+Artist                          : flux1-dev-fp8
+Image ID                        : 1220456650f0ccf07be30cc60e8c01b446039ac6606a7154bc59c30b5eb89e537258
+Copyright                       : https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/LICENSE.md;1220b7a00498845420da83aad42857f69fbfcf731fd1efa6d1bb596a884f2f2cbf53
+Date/Time Original              : 2024-08-12 23:07:42.833579+00:00
+User Comment                    : {"model": {"name": "flux", "id": "flux1-dev-fp8", "multihash": "1220dc4a58f44c1ba335822aaf041b2d19483bfd12d5dc260f6fac403f7be5f33181", "license_url": "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/LICENSE.md", "license_multihash": "1220b7a00498845420da83aad42857f69fbfcf731fd1efa6d1bb596a884f2f2cbf53", "author": "Black Forest Labs"}, "input": {"prompt": "A majestic angel with large, dark wings, adorned in flowing blue robes, carrying a sleeping baby and surrounded by cherubs in a moonlit sky.  Whimsical, ethereal, celestial, fantasy art", "seed": 1914590619, "cfg_scale": 3.5, "steps": 40, "width": 1024, "height": 2048, "type": "txt2img"}, "output": {"filename": "1723504062.1747687.png", "format": "image/png", "image_multihash": "1220456650f0ccf07be30cc60e8c01b446039ac6606a7154bc59c30b5eb89e537258", "creation_date_time": "2024-08-12 23:07:42.833579+00:00"}}
+Image Size                      : 1024x2048
+Megapixels                      : 2.1
 ```
 
 ## Performance
