@@ -52,6 +52,12 @@ source .venv/bin/activate
 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True python app.py
 ```
 
+### Example Comparison
+
+| FLUX.1-DEV FULL MODEL | FLUX.1-DEV-FP8 QUANTIZED MODEL |
+| - | - |
+| ![1024x2048; 40 steps; FLUX.1-DEV FULL MODEL](./samples/1723504062.1747687-dev.webp "1024x2048; 40 steps; FLUX.1-DEV FULL MODEL") | ![1024x2048; 40 steps; FLUX.1-DEV-FP8 QUANTIZED MODEL](./samples/1723504062.1747687.webp "1024x2048; 40 steps; FLUX.1-DEV-FP8 QUANTIZED MODEL") |
+
 ## Inference Metadata
 
 This is an example of the inference metadata saved into the PNG images.
@@ -130,10 +136,6 @@ Quantization adds ~90 sec at the startup time.
 ### 1024x2024; 28 steps
 
 ![1024x2024; 28 steps](./samples/1723501887.0529025.webp "1024x2024; 28 steps")
-
-### 1024x2048; 40 steps
-
-![1024x2048; 40 steps](./samples/1723504062.1747687.webp "1024x2048; 40 steps")
 
 ### 2048x2048; 50 steps
 
