@@ -2,13 +2,11 @@
 
 Inference app for a FP8-quantized flux1-dev model. **This runs on graphic cards with 16 GB of VRAM**.
 
-This a fork of [FLUX.1-dev's Inference App on Hugging Face](https://huggingface.co/spaces/black-forest-labs/FLUX.1-dev).
-
 ## Description
 
 This is the inference app for a FP8 quantized version of flux1-dev that can run on graphic cards with 16 GB of VRAM.
 
-Although it has the Hugging Face's UI, this code is meant to run locally on your machine.
+This project leverage the [FLUX.1-dev's Inference App on Hugging Face](https://huggingface.co/spaces/black-forest-labs/FLUX.1-dev), but it is meant to run locally on your machine.
 
 Improvements over the original code:
 
@@ -143,6 +141,8 @@ This is my configuration:
 Excluding the real first time when you need to download all the resources, these are some examples of the performance I get.
 
 Prompt: *A majestic angel with large, dark wings, adorned in flowing blue robes, carrying a sleeping baby and surrounded by cherubs in a moonlit sky.  Whimsical, ethereal, celestial, fantasy art*
+
+Seed: 1914590619
 
 CFG: 3.5
 
