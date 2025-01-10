@@ -6,7 +6,7 @@ Inference app for a FP8-quantized flux1-dev model. **This runs on graphic cards 
 
 This is the inference app for a FP8 quantized version of flux1-dev that can run on graphic cards with 16 GB of VRAM.
 
-This project leverage the [FLUX.1-dev's Inference App on Hugging Face](https://huggingface.co/spaces/black-forest-labs/FLUX.1-dev), but it is meant to run locally on your machine.
+This project resembles the [FLUX.1-dev's Inference App on Hugging Face](https://huggingface.co/spaces/black-forest-labs/FLUX.1-dev), but it is meant to run locally on your machine.
 
 Improvements over the original code:
 
