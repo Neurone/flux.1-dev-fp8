@@ -134,7 +134,7 @@ This is my configuration:
 - GPU: Nvidia GeForce RTX 4080 SUPER 16 GB
 - RAM: 64 GB DDR5
 - DISK (Operating System): SSD NVMe Crucial P5 Plus 2TB
-- DISK (Models): External USB3 HDD
+- DISK (Models): External USB3 NVMe Disk
 - OPERATING SYSTEM: Ubuntu 22.04.3 LTS
 - PYTHON VERSION: 3.10.12
 
@@ -148,7 +148,7 @@ CFG: 3.5
 
 | operation | time spent |
 | - | - |
-| Startup time | ~4-5 minutes (the first startup after reboot takes ~13 mins.)|
+| Startup time | ~50 seconds (using an HDD can increase the startup time significantly, for example up to 13 mins old setup with HDD)|
 | Inference; 512x512; 28 steps | 19 seconds |
 | Inference; 1024x1024; 28 steps | 45 seconds |
 | Inference; 1024x1024; 50 steps | 1 minute and 6 seconds |
@@ -157,9 +157,9 @@ CFG: 3.5
 | Inference; 2048x2048; 28 steps | 2 minutes and 39 seconds|
 | Inference; 2048x2048; 50 steps | 4 minutes and 46 seconds|
 
-After a couple of runs, most of the startup time is spent in the part **before** the quantization of the model.
+After a couple of runs the startup time decreases, but most of the startup time is spent in the part **before** the quantization of the model.
 
-Quantization adds ~90 sec at the startup time.
+Quantization adds ~9 seconds at the startup time (~90 in my previous configuration with an external HDD).
 
 ## Samples
 
@@ -183,122 +183,51 @@ Quantization adds ~90 sec at the startup time.
 
 ```bash
 ❯ python app.py
-./.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_fwd")
-./.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_bwd")
-2024-08-12 23:15:53.585458 Started
-Downloading shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 44.69it/s]
-Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [03:07<00:00, 93.81s/it]
+2025-03-05 20:19:16.468597 Started
+Downloading shards: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 2694.70it/s]
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:10<00:00,  5.20s/it]
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
-Fetching 3 files: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 26.87it/s]
-2024-08-12 23:19:25.183450 Quantizing transformer
-2024-08-12 23:27:55.037217 Quantizing text encoder 2
-2024-08-12 23:28:15.598087 Loading demo
-Will cache examples in './gradio_cached_examples/19' directory at first use. 
+Fetching 3 files: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 1283.45it/s]
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:23<00:00,  7.97s/it]
+2025-03-05 20:19:57.180855 Quantizing transformer
+2025-03-05 20:20:05.793952 Quantizing text encoder 2
+2025-03-05 20:20:09.611559 Loading demo
+/home/developer/workspace/flux.1-dev-fp8/.venv/lib/python3.12/site-packages/gradio/helpers.py:148: UserWarning: In future versions of Gradio, the `cache_examples` parameter will no longer accept a value of 'lazy'. To enable lazy caching in Gradio, you should set `cache_examples=True`, and `cache_mode='lazy'` instead.
+  warnings.warn(
+Will cache examples in '/home/developer/workspace/flux.1-dev-fp8/.gradio/cached_examples/19' directory at first use.
 
-
-Running on local URL:  http://127.0.0.1:7860
-INFO:httpx:HTTP Request: GET http://127.0.0.1:7860/startup-events "HTTP/1.1 200 OK"
+* Running on local URL:  http://127.0.0.1:7860
+INFO:httpx:HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
 
 To create a public link, set `share=True` in `launch()`.
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
 INFO:httpx:HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
-^CKeyboard interruption in main thread... closing server.
 
-
-### 12:21 mins
+### 53 seconds (12:21 mins with HDD)
 
 
 ❯ python app.py
-./.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_fwd")
-./.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_bwd")
-2024-08-12 23:28:37.290645 Started
-Downloading shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 44.73it/s]
-Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [03:07<00:00, 93.78s/it]
+2025-03-05 20:24:33.615529 Started
+Downloading shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 24966.10it/s]
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  2.86it/s]
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
-Fetching 3 files: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 28.29it/s]
-2024-08-12 23:32:04.014079 Quantizing transformer
-2024-08-12 23:34:52.977714 Quantizing text encoder 2
-2024-08-12 23:35:14.110980 Loading demo
-Will cache examples in './gradio_cached_examples/19' directory at first use. 
+Fetching 3 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 12761.57it/s]
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 103.95it/s]
+2025-03-05 20:24:39.492626 Quantizing transformer
+2025-03-05 20:24:47.987617 Quantizing text encoder 2
+2025-03-05 20:24:51.777597 Loading demo
+/home/developer/workspace/flux.1-dev-fp8/.venv/lib/python3.12/site-packages/gradio/helpers.py:148: UserWarning: In future versions of Gradio, the `cache_examples` parameter will no longer accept a value of 'lazy'. To enable lazy caching in Gradio, you should set `cache_examples=True`, and `cache_mode='lazy'` instead.
+  warnings.warn(
+Will cache examples in '/home/developer/workspace/flux.1-dev-fp8/.gradio/cached_examples/19' directory at first use.
 
-
-Running on local URL:  http://127.0.0.1:7860
-INFO:httpx:HTTP Request: GET http://127.0.0.1:7860/startup-events "HTTP/1.1 200 OK"
+* Running on local URL:  http://127.0.0.1:7860
+INFO:httpx:HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
 
 To create a public link, set `share=True` in `launch()`.
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
-INFO:httpx:HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
-^CKeyboard interruption in main thread... closing server.
-
-
-## 6:37 mins
-
-
-❯ python app.py
-./.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_fwd")
-./.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_bwd")
-2024-08-12 23:36:22.058130 Started
-Downloading shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 44.41it/s]
-Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [02:42<00:00, 81.02s/it]
-You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
-Fetching 3 files: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 30.68it/s]
-2024-08-12 23:39:19.638047 Quantizing transformer
-2024-08-12 23:40:28.817001 Quantizing text encoder 2
-2024-08-12 23:40:49.528701 Loading demo
-Will cache examples in './gradio_cached_examples/19' directory at first use. 
-
-
-Running on local URL:  http://127.0.0.1:7860
-INFO:httpx:HTTP Request: GET http://127.0.0.1:7860/startup-events "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
-
-To create a public link, set `share=True` in `launch()`.
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
-INFO:httpx:HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
-^CKeyboard interruption in main thread... closing server.
-
-
-## 4:27 mins
-
-
-❯ python app.py
-/home/developer/workspace/FLUX.1-dev/.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_fwd")
-/home/developer/workspace/FLUX.1-dev/.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
-  @torch.library.impl_abstract("xformers_flash::flash_bwd")
-2024-08-12 23:46:18.007443 Started
-Downloading shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 73.64it/s]
-Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [03:09<00:00, 94.50s/it]
-You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
-Fetching 3 files: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 26.61it/s]
-2024-08-12 23:49:43.073283 Quantizing transformer
-2024-08-12 23:51:13.973582 Quantizing text encoder 2
-2024-08-12 23:51:34.588930 Loading demo
-Will cache examples in '/home/developer/workspace/FLUX.1-dev/gradio_cached_examples/19' directory at first use. 
-
-
-Running on local URL:  http://127.0.0.1:7860
-INFO:httpx:HTTP Request: GET http://127.0.0.1:7860/startup-events "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
-
-To create a public link, set `share=True` in `launch()`.
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
-INFO:httpx:HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
 INFO:httpx:HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
 
-
-## 5:16 mins
+## 18 seconds (6:37 mins with HDD)
 ```
 
 ## Utils
